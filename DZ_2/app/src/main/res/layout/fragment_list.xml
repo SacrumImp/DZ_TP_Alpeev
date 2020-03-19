@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_list"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/butadd"></androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/butadd"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:text="Добавить"
+        android:textSize="18dp"
+        android:onClick="Clickable">
+
+    </Button>
+
+</RelativeLayout>

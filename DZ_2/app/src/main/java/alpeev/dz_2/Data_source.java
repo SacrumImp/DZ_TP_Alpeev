@@ -1,20 +1,20 @@
 package alpeev.dz_2;
 
-public class Data_source {
+class Data_source {
 
     private static Data_source sInstance;
 
-    int quantity = 100;
+    private int quantity = 100;
 
-    public int getData(){
+    int getData(){
         return quantity;
     }
 
-    public void setData(int n){
+    void setData(int n){
          quantity = n;
     }
 
-    public synchronized static Data_source getInstance(){
+    synchronized static Data_source getInstance(){
         if(sInstance == null){
             sInstance = new Data_source();
         }

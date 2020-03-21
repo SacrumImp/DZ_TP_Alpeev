@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "alpeev.dz_2"
-        minSdkVersion 28
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"

@@ -4,13 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 public class fragment_number extends Fragment {
     
@@ -25,6 +23,7 @@ public class fragment_number extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         TextView txt = view.findViewById(R.id.textB);
+        assert getArguments() != null;
         txt.setText(getArguments().getCharSequence("number"));
         txt.setTextColor(getArguments().getInt("color"));
     }

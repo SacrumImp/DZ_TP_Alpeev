@@ -1,32 +1,19 @@
 package alpeev.dz_2;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.List;
-
-import static java.lang.String.valueOf;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements fragment_list.ReportListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState != null) Data_source.getInstance().setData(savedInstanceState.getInt("quantity"));
 
         Fragment fragm = new fragment_list();
         getSupportFragmentManager()
@@ -36,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void Clickable(View view){
+    public void buttonClicked(View view){
         Data_source.getInstance().setData(Data_source.getInstance().getData() + 1);
         Fragment fragmNew = new fragment_list();
         getSupportFragmentManager()
@@ -45,4 +32,18 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    @Override
+    public void reportMessage(int View, Fragment fram) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(View, fram)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("quantity", Data_source.getInstance().getData());
+        super.onSaveInstanceState(outState);
+    }
 }

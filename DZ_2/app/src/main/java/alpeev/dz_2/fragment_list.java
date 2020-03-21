@@ -1,5 +1,6 @@
 package alpeev.dz_2;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,14 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +21,7 @@ import static java.lang.String.valueOf;
 
 public class fragment_list extends Fragment {
 
-    private MyDataAdapter adap;
+    ReportListener reportListener;
 
     @Nullable
     @Override
@@ -34,18 +33,19 @@ public class fragment_list extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        MyDataAdapter Adap;
         RecyclerView recyclerView = view.findViewById(R.id.list_buttons);
-        adap = new fragment_list.MyDataAdapter(Data_source.getInstance().getData());
+        Adap = new fragment_list.MyDataAdapter(Data_source.getInstance().getData());
         int h = (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)? 3: 4;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), h));
-        recyclerView.setAdapter(adap);
+        recyclerView.setAdapter(Adap);
     }
 
     class MyDataAdapter extends RecyclerView.Adapter<MyViewHolder>{
 
         int quantity;
 
-        public MyDataAdapter(int q){
+        MyDataAdapter(int q){
             quantity = q;
         }
 
@@ -72,9 +72,8 @@ public class fragment_list extends Fragment {
     class MyViewHolder extends RecyclerView.ViewHolder{
 
         private final Button but;
-        private TextView textB;
 
-        public MyViewHolder(@NonNull View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
             but = itemView.findViewById(R.id.but);
             but.setOnClickListener(view -> {
@@ -83,13 +82,25 @@ public class fragment_list extends Fragment {
                 bun.putCharSequence("number", but.getText());
                 bun.putInt("color", but.getCurrentTextColor());
                 fram.setArguments(bun);
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fram_layout, fram)
-                        .addToBackStack(null)
-                        .commit();
+                reportListener.reportMessage(R.id.fram_layout, fram);
             });
 
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        reportListener = (ReportListener)context;
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach() {
+        reportListener = null;
+        super.onDetach();
+    }
+
+    public interface ReportListener{
+        void reportMessage(int View, Fragment fram);
     }
 }

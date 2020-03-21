@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_list"
-    android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical">
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -19,9 +18,9 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
-        android:text="Добавить"
-        android:textSize="18dp"
-        android:onClick="Clickable">
+        android:text="@string/add"
+        android:textSize="18sp"
+        android:onClick="buttonClicked">
 
     </Button>
 

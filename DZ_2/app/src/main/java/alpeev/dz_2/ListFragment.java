@@ -1,7 +1,6 @@
 package alpeev.dz_2;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +18,7 @@ import static java.lang.String.valueOf;
 
 public class ListFragment extends Fragment {
 
-    ReportListener reportListener;
+    private ReportListener reportListener;
 
     @Nullable
     @Override
@@ -35,10 +34,11 @@ public class ListFragment extends Fragment {
         MyDataAdapter adap;
         RecyclerView recyclerView = view.findViewById(R.id.list_buttons);
         adap = new ListFragment.MyDataAdapter(DataSource.getInstance().getData());
-        int h = (getResources().getBoolean(R.bool.is_horizontal) != true)? 3: 4;
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), h));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getResources().getInteger(R.integer.is_horizontal)));
         recyclerView.setAdapter(adap);
     }
+
+
 
     class MyDataAdapter extends RecyclerView.Adapter<MyViewHolder>{
 
@@ -66,6 +66,12 @@ public class ListFragment extends Fragment {
         public int getItemCount() {
             return quantity;
         }
+
+        public void update(){
+            quantity = DataSource.getInstance().getData();
+            notifyDataSetChanged();
+        }
+
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{
@@ -108,4 +114,5 @@ public class ListFragment extends Fragment {
         outState.putInt("quantity", DataSource.getInstance().getData());
         super.onSaveInstanceState(outState);
     }
+
 }

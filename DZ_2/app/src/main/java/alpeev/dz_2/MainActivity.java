@@ -2,6 +2,7 @@ package alpeev.dz_2;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
@@ -23,11 +24,8 @@ public class MainActivity extends AppCompatActivity implements ListFragment.Repo
 
     public void buttonClicked(View view){
         DataSource.getInstance().setData(DataSource.getInstance().getData() + 1);
-        Fragment fragmNew = new ListFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fram_layout, fragmNew)
-                .commit();
+        RecyclerView recyclerView = findViewById(R.id.list_buttons);
+        ((ListFragment.MyDataAdapter)recyclerView.getAdapter()).update();
     }
 
     @Override
@@ -38,4 +36,6 @@ public class MainActivity extends AppCompatActivity implements ListFragment.Repo
                 .addToBackStack(null)
                 .commit();
     }
+
+
 }

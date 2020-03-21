@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <bool name="is_horizontal">true</bool>
+    <integer name = "is_horizontal">4</integer>
 </resources>

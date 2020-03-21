@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import java.util.Objects;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import static java.lang.String.valueOf;
 
-public class fragment_list extends Fragment {
+public class ListFragment extends Fragment {
 
     ReportListener reportListener;
 
@@ -32,13 +30,14 @@ public class fragment_list extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (savedInstanceState != null) DataSource.getInstance().setData(savedInstanceState.getInt("quantity"));
 
-        MyDataAdapter Adap;
+        MyDataAdapter adap;
         RecyclerView recyclerView = view.findViewById(R.id.list_buttons);
-        Adap = new fragment_list.MyDataAdapter(Data_source.getInstance().getData());
-        int h = (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)? 3: 4;
+        adap = new ListFragment.MyDataAdapter(DataSource.getInstance().getData());
+        int h = (getResources().getBoolean(R.bool.is_horizontal) != true)? 3: 4;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), h));
-        recyclerView.setAdapter(Adap);
+        recyclerView.setAdapter(adap);
     }
 
     class MyDataAdapter extends RecyclerView.Adapter<MyViewHolder>{
@@ -77,12 +76,12 @@ public class fragment_list extends Fragment {
             super(itemView);
             but = itemView.findViewById(R.id.but);
             but.setOnClickListener(view -> {
-                Fragment fram = new fragment_number();
+                Fragment fram = new NumberFragment();
                 Bundle bun = new Bundle();
                 bun.putCharSequence("number", but.getText());
                 bun.putInt("color", but.getCurrentTextColor());
                 fram.setArguments(bun);
-                reportListener.reportMessage(R.id.fram_layout, fram);
+                reportListener.reportMessage(fram);
             });
 
         }
@@ -101,6 +100,12 @@ public class fragment_list extends Fragment {
     }
 
     public interface ReportListener{
-        void reportMessage(int View, Fragment fram);
+        void reportMessage(Fragment fram);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt("quantity", DataSource.getInstance().getData());
+        super.onSaveInstanceState(outState);
     }
 }

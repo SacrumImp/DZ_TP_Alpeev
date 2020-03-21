@@ -1,8 +1,8 @@
 package alpeev.dz_2;
 
-class Data_source {
+class DataSource {
 
-    private static Data_source sInstance;
+    private static DataSource sInstance;
 
     private int quantity = 100;
 
@@ -14,9 +14,9 @@ class Data_source {
          quantity = n;
     }
 
-    synchronized static Data_source getInstance(){
+    synchronized static DataSource getInstance(){
         if(sInstance == null){
-            sInstance = new Data_source();
+            sInstance = new DataSource();
         }
         return sInstance;
     }

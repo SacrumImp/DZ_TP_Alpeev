@@ -15,11 +15,12 @@ public class MainActivity extends AppCompatActivity implements ListFragment.Repo
         setContentView(R.layout.activity_main);
 
         Fragment fragm = new ListFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.fram_layout, fragm)
-                .commit();
-
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fram_layout, fragm)
+                    .commit();
+        }
     }
 
     public void buttonClicked(View view){
